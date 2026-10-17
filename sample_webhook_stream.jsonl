@@ -1,0 +1,5 @@
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"t1","contextId":"c1","status":{"state":"working"},"metadata":{"pushConfig":{"url":"https://hooks.example.com/cb","token":"abc"}}}}
+{"jsonrpc":"2.0","id":2,"result":{"kind":"status-update","taskId":"t2","contextId":"c1","metadata":{"pushConfig":{"url":"http://169.254.169.254/latest/meta-data/"}}}}
+{"jsonrpc":"2.0","id":3,"result":{"kind":"status-update","taskId":"t3","contextId":"c1","metadata":{"pushConfig":{"url":"https://admin:secret@db.internal.corp:6379/x"}}}}
+{"jsonrpc":"2.0","id":4,"result":{"kind":"status-update","taskId":"t4","contextId":"c1","metadata":{"pushConfig":{"url":"http://hooks.example.com/cb"}}}}
+{"jsonrpc":"2.0","id":5,"result":{"kind":"status-update","taskId":"t5","contextId":"c1","metadata":{"pushConfig":{"url":"http://localhost:8080/dev-hook"}}}}
