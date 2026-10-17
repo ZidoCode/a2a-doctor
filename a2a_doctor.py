@@ -38,6 +38,7 @@ import a2a_context_audit
 import a2a_webhook_audit
 import a2a_timeline_replay
 import a2a_card_drift
+import a2a_error_audit
 
 try:
     import a2a_card_lock
@@ -172,6 +173,22 @@ def check(card, stream_lines, lock_path=None, lock_data=None, price=3.0):
             else:
                 sections.append(("webhook", "PASS", f"{wstats['urls_audited']} URL(s) audited, no SSRF indicators"))
 
+        # error envelope hygiene
+        if events:
+            try:
+                efindings, estats = a2a_error_audit.audit(stream_lines)
+                ecrit = [m for s, m in efindings if s in ("CRITICAL", "HIGH")]
+                ewarn = [m for s, m in efindings if s in ("WARNING", "MEDIUM")]
+                if ecrit:
+                    sections.append(("errors", "FAIL", f"{len(ecrit)} critical — {ecrit[0]}"))
+                elif ewarn:
+                    sections.append(("errors", "WARN", f"{len(ewarn)} warning(s) — {ewarn[0]}"))
+                else:
+                    sections.append(("errors", "PASS",
+                        f"{estats['errors']} error envelope(s), {estats['failed_tasks']} failed task(s) well-formed"))
+            except Exception as e:
+                sections.append(("errors", "WARN", f"could not audit: {e}"))
+
         # reconnect
         if events:
             try:
@@ -250,7 +267,7 @@ def main(argv=None):
                                 description="Umbrella health check for the ZidoCode A2A audit suite.")
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    for name in ("tax", "stream", "reconnect", "artifacts", "lifecycle", "context", "webhook", "timeline", "card"):
+    for name in ("tax", "stream", "reconnect", "artifacts", "lifecycle", "context", "webhook", "timeline", "card", "errors"):
         s = sub.add_parser(name)
         s.add_argument("file")
     s = sub.add_parser("lock")
@@ -282,7 +299,7 @@ def main(argv=None):
             print(f"error: {err}", file=sys.stderr)
             return 2
         return a2a_card_drift.main(["check", args.file])
-    if args.cmd in ("stream", "reconnect", "artifacts", "lifecycle", "context", "webhook"):
+    if args.cmd in ("stream", "reconnect", "artifacts", "lifecycle", "context", "webhook", "errors"):
         lines, err = _load_lines(args.file)
         if err:
             print(f"error: {err}", file=sys.stderr)
@@ -290,6 +307,8 @@ def main(argv=None):
         if not any(l.strip() for l in lines):
             print(f"error: {args.file} has no events", file=sys.stderr)
             return 2
+        if args.cmd == "errors":
+            return a2a_error_audit.report(lines)
         if args.cmd == "webhook":
             findings, wstats = a2a_webhook_audit.audit(lines)
             for s, m in findings:
