@@ -15,6 +15,7 @@ The umbrella entry point for the ZidoCode A2A audit suite:
 | [a2a-task-state-audit](https://github.com/ZidoCode/a2a-task-state-audit) | task resurrection, illegal transitions, unknown states |
 | [a2a-context-audit](https://github.com/ZidoCode/a2a-context-audit) | empty IDs, context mutation, orphan contexts ([A2A#1309](https://github.com/a2aproject/A2A/issues/1309)) |
 | [a2a-webhook-audit](https://github.com/ZidoCode/a2a-webhook-audit) | webhook SSRF: metadata IPs, credentials, risky ports ([a2a-go#373](https://github.com/a2aproject/a2a-go/issues/373)) |
+| [a2a-timeline-replay](https://github.com/ZidoCode/a2a-timeline-replay) | time-travel explorer — per-task timelines, event windows, raw JSON at any line |
 | [a2a-card-lock](https://github.com/ZidoCode/a2a-card-lock) | agent-card pin + drift gate |
 
 Each member works standalone. a2a-doctor runs them all in one pass and gives one verdict.
@@ -56,6 +57,7 @@ a2a-doctor artifacts stream.jsonl # artifact integrity report
 a2a-doctor lifecycle stream.jsonl # task state machine audit
 a2a-doctor context stream.jsonl   # context/task correlation audit
 a2a-doctor webhook stream.jsonl   # webhook SSRF audit (offline)
+a2a-doctor timeline stream.jsonl  # time-travel explorer: per-task state chains
 a2a-doctor lock card.json a2a-card.lock  # drift check
 ```
 
