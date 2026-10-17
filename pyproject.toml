@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "a2a-doctor"
+version = "0.3.0"
+description = "One command, every A2A audit - replay recorded streams offline and health-check agent-to-agent traffic: token tax, artifact loss, task lifecycle, context correlation, webhook SSRF, MCP collisions."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "ZidoCode"}]
+keywords = ["a2a", "agent2agent", "audit", "agent", "llm", "mcp", "webhook", "ssrf", "token", "offline", "replay"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Quality Assurance",
+  "Topic :: Software Development :: Testing",
+]
+
+[project.scripts]
+a2a-doctor = "a2a_doctor:main"
+
+[tool.hatch.build.targets.wheel]
+include = ["a2a_*.py"]
