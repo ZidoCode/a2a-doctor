@@ -1,0 +1,17 @@
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"good-task","contextId":"c1","final":false,"status":{"state":"submitted","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"good-task","contextId":"c1","final":false,"status":{"state":"working","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"artifact-update","taskId":"good-task","contextId":"c1","append":false,"last_chunk":true,"artifact":{"artifactId":"a1","parts":[{"kind":"text","text":"flight details here"}]}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"good-task","contextId":"c1","final":false,"status":{"state":"completed","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"zombie-task","contextId":"c1","final":false,"status":{"state":"submitted","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"zombie-task","contextId":"c1","final":false,"status":{"state":"failed","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"zombie-task","contextId":"c1","final":false,"status":{"state":"working","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"weird-task","contextId":"c1","final":false,"status":{"state":"submitted","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"weird-task","contextId":"c1","final":false,"status":{"state":"vibrating","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"skippy-task","contextId":"c1","final":false,"status":{"state":"completed","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"skippy-task","contextId":"c1","final":false,"status":{"state":"working","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"open-task","contextId":"c1","final":false,"status":{"state":"submitted","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"open-task","contextId":"c1","final":false,"status":{"state":"working","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"artifact-update","taskId":"zombie-task","contextId":"c1","append":false,"last_chunk":true,"artifact":{"artifactId":"a1","parts":[{"kind":"text","text":"late content"}]}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"rej-task","contextId":"c1","final":false,"status":{"state":"submitted","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"rej-task","contextId":"c1","final":false,"status":{"state":"rejected","timestamp":"2026-10-17T00:00:00Z"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"rej-task","contextId":"c1","final":false,"status":{"state":"working","timestamp":"2026-10-17T00:00:00Z"}}}
