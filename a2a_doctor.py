@@ -37,6 +37,7 @@ import a2a_task_state_audit
 import a2a_context_audit
 import a2a_webhook_audit
 import a2a_timeline_replay
+import a2a_card_drift
 
 try:
     import a2a_card_lock
@@ -183,6 +184,22 @@ def check(card, stream_lines, lock_path=None, lock_data=None, price=3.0):
             except Exception as e:
                 sections.append(("reconnect", "WARN", f"could not measure: {e}"))
 
+        # card drift (version sanity) — card-based
+        if card is not None and _card_is_object(card):
+            try:
+                drift_findings = a2a_card_drift.check_card(card)
+                dcrit = [m for s, m in drift_findings if s == "critical"]
+                dwarn = [m for s, m in drift_findings if s == "warning"]
+                if dcrit:
+                    sections.append(("drift", "FAIL", f"{len(dcrit)} critical — {dcrit[0]}"))
+                elif dwarn:
+                    sections.append(("drift", "WARN", f"{len(dwarn)} warning(s) — {dwarn[0]}"))
+                else:
+                    pv = card.get("protocolVersion", "?")
+                    sections.append(("drift", "PASS", f"protocolVersion {pv} sane"))
+            except Exception as e:
+                sections.append(("drift", "WARN", f"could not audit: {e}"))
+
     # --- lock drift ---
     if lock_path is not None:
         if a2a_card_lock is None:
@@ -233,7 +250,7 @@ def main(argv=None):
                                 description="Umbrella health check for the ZidoCode A2A audit suite.")
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    for name in ("tax", "stream", "reconnect", "artifacts", "lifecycle", "context", "webhook", "timeline"):
+    for name in ("tax", "stream", "reconnect", "artifacts", "lifecycle", "context", "webhook", "timeline", "card"):
         s = sub.add_parser(name)
         s.add_argument("file")
     s = sub.add_parser("lock")
@@ -259,6 +276,12 @@ def main(argv=None):
 
     if args.cmd == "timeline":
         return a2a_timeline_replay.main(["timeline", args.file])
+    if args.cmd == "card":
+        card, err = _load_json(args.file, "card")
+        if err:
+            print(f"error: {err}", file=sys.stderr)
+            return 2
+        return a2a_card_drift.main(["check", args.file])
     if args.cmd in ("stream", "reconnect", "artifacts", "lifecycle", "context", "webhook"):
         lines, err = _load_lines(args.file)
         if err:
