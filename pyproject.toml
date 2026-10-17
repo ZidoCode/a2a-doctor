@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "a2a-doctor"
-version = "0.3.0"
+version = "0.4.0"
 description = "One command, every A2A audit - replay recorded streams offline and health-check agent-to-agent traffic: token tax, artifact loss, task lifecycle, context correlation, webhook SSRF, MCP collisions."
 readme = "README.md"
 requires-python = ">=3.9"
