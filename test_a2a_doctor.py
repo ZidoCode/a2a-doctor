@@ -139,6 +139,21 @@ class TestCLI(unittest.TestCase):
         r = self._run("check", "--card", self.card_p, "--stream", self.stream_p)
         self.assertIn("drift", r.stdout)
 
+    def test_fleet_subcommand_clean(self):
+        a, b = "/tmp/fc_a.json", "/tmp/fc_b.json"
+        json.dump({"name":"fa","description":"d","protocolVersion":"0.3"}, open(a, "w"))
+        json.dump({"name":"fb","description":"d","protocolVersion":"0.3"}, open(b, "w"))
+        r = self._run("fleet", a, b)
+        self.assertEqual(r.returncode, 0)
+
+    def test_fleet_subcommand_dirty(self):
+        a, b = "/tmp/fc_c.json", "/tmp/fc_d.json"
+        json.dump({"name":"fa","description":"d","protocolVersion":"0.3","skills":[{"id":"dup","name":"X"}]}, open(a, "w"))
+        json.dump({"name":"fb","description":"d","protocolVersion":"0.3","skills":[{"id":"dup","name":"Y"}]}, open(b, "w"))
+        r = self._run("fleet", a, b)
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("skill id 'dup'", r.stdout)
+
     def test_check_drift_fail_exit2(self):
         bad = dict(CARD, protocolVersion="9.2.9")
         p = "/tmp/dr_t_badcard2.json"
