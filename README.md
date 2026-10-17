@@ -23,6 +23,7 @@ The umbrella entry point for the ZidoCode A2A audit suite:
 | [a2a-timeline-replay](https://github.com/ZidoCode/a2a-timeline-replay) | time-travel explorer — per-task timelines, event windows, raw JSON at any line |
 | [a2a-card-lock](https://github.com/ZidoCode/a2a-card-lock) | agent-card pin + drift gate |
 | [a2a-card-drift](https://github.com/ZidoCode/a2a-card-drift) | protocol version sanity: MCP-date versions, 1.0 cards on pre-1.0 shape, snapshot diff ([LiteLLM#30795](https://github.com/BerriAI/litellm/issues/30795)) |
+| **a2a-error-audit** (vendored) | error envelope hygiene: silent voids, missing messages, untyped `error.data`, failed tasks without a signal ([a2a-rs#146](https://github.com/a2aproject/a2a-rs/commit/f8e424953848dbb29d29143d5c86db56d00e30f1), [ADK#4309](https://github.com/google/adk-python/issues/4309)) |
 
 Each member works standalone. a2a-doctor runs them all in one pass and gives one verdict.
 
@@ -36,7 +37,7 @@ pip install a2a-doctor   # or: copy the .py files (they are all stdlib-only)
 
 ```bash
 $ a2a-doctor check --card card.json --stream stream.jsonl --lock a2a-card.lock
-a2a-doctor check — 7 section(s)
+a2a-doctor check — 10 section(s)
 
   ✓ card       418 tok estimated
   ✓ polling    ~418 tok/task estimated
@@ -65,6 +66,7 @@ a2a-doctor context stream.jsonl   # context/task correlation audit
 a2a-doctor webhook stream.jsonl   # webhook SSRF audit (offline)
 a2a-doctor timeline stream.jsonl  # time-travel explorer: per-task state chains
 a2a-doctor card card.json         # protocol version drift audit
+a2a-doctor errors stream.jsonl    # error envelope hygiene audit
 a2a-doctor lock card.json a2a-card.lock  # drift check
 ```
 
