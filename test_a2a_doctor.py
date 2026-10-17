@@ -123,6 +123,29 @@ class TestCLI(unittest.TestCase):
         self.assertEqual(r.returncode, 0)
         self.assertIn("tok", r.stdout)
 
+    def test_card_drift_subcommand_clean(self):
+        r = self._run("card", self.card_p)
+        self.assertEqual(r.returncode, 0)
+
+    def test_card_drift_subcommand_dirty(self):
+        bad = dict(CARD, protocolVersion="2025-06-18")
+        p = "/tmp/dr_t_badcard.json"
+        json.dump(bad, open(p, "w"))
+        r = self._run("card", p)
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("MCP", r.stdout)
+
+    def test_check_includes_drift_section(self):
+        r = self._run("check", "--card", self.card_p, "--stream", self.stream_p)
+        self.assertIn("drift", r.stdout)
+
+    def test_check_drift_fail_exit2(self):
+        bad = dict(CARD, protocolVersion="9.2.9")
+        p = "/tmp/dr_t_badcard2.json"
+        json.dump(bad, open(p, "w"))
+        r = self._run("check", "--card", p, "--stream", self.stream_p)
+        self.assertEqual(r.returncode, 2)
+
     def test_tax_bad_card(self):
         r = self._run("tax", "/nope.json")
         self.assertEqual(r.returncode, 2)
