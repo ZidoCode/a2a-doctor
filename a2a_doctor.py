@@ -39,6 +39,7 @@ import a2a_webhook_audit
 import a2a_timeline_replay
 import a2a_card_drift
 import a2a_error_audit
+import a2a_fleet_compare
 
 try:
     import a2a_card_lock
@@ -270,6 +271,8 @@ def main(argv=None):
     for name in ("tax", "stream", "reconnect", "artifacts", "lifecycle", "context", "webhook", "timeline", "card", "errors"):
         s = sub.add_parser(name)
         s.add_argument("file")
+    s = sub.add_parser("fleet")
+    s.add_argument("cards", nargs="+")
     s = sub.add_parser("lock")
     s.add_argument("card")
     s.add_argument("lockfile", nargs="?")
@@ -293,6 +296,8 @@ def main(argv=None):
 
     if args.cmd == "timeline":
         return a2a_timeline_replay.main(["timeline", args.file])
+    if args.cmd == "fleet":
+        return a2a_fleet_compare.main(args.cards)
     if args.cmd == "card":
         card, err = _load_json(args.file, "card")
         if err:
