@@ -36,6 +36,7 @@ import a2a_artifact_audit
 import a2a_task_state_audit
 import a2a_context_audit
 import a2a_webhook_audit
+import a2a_timeline_replay
 
 try:
     import a2a_card_lock
@@ -232,7 +233,7 @@ def main(argv=None):
                                 description="Umbrella health check for the ZidoCode A2A audit suite.")
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    for name in ("tax", "stream", "reconnect", "artifacts", "lifecycle", "context", "webhook"):
+    for name in ("tax", "stream", "reconnect", "artifacts", "lifecycle", "context", "webhook", "timeline"):
         s = sub.add_parser(name)
         s.add_argument("file")
     s = sub.add_parser("lock")
@@ -256,6 +257,8 @@ def main(argv=None):
         print(f"card: ~{tok} tok (~${tok / 1_000_000 * 3.0:.6f} per scan @ $3/MTok)")
         return 0
 
+    if args.cmd == "timeline":
+        return a2a_timeline_replay.main(["timeline", args.file])
     if args.cmd in ("stream", "reconnect", "artifacts", "lifecycle", "context", "webhook"):
         lines, err = _load_lines(args.file)
         if err:
