@@ -1,0 +1,10 @@
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"t1","contextId":"c1","final":false,"status":{"state":"working"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"t1","contextId":"c1","final":true,"status":{"state":"completed"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"t2","contextId":"c2","final":false,"status":{"state":"working"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"t2","contextId":"c2x","final":true,"status":{"state":"completed"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"","contextId":"c3","final":false,"status":{"state":"working"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"t3","contextId":"","final":false,"status":{"state":"working"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"t4","contextId":null,"final":false,"status":{"state":"working"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":"t4","contextId":null,"final":true,"status":{"state":"completed"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":null,"contextId":"orphan-ctx","final":false,"status":{"state":"working"}}}
+{"jsonrpc":"2.0","id":1,"result":{"kind":"status-update","taskId":null,"contextId":"orphan-ctx","final":true,"status":{"state":"completed"}}}
