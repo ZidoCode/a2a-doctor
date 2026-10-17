@@ -2,7 +2,12 @@
 
 **One command, every A2A audit in the family. Dumb math, honest numbers, zero dependencies.**
 
-[![tests](https://github.com/ZidoCode/a2a-doctor/actions/workflows/ci.yml/badge.svg)](https://github.com/ZidoCode/a2a-doctor/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)]()
+[![tests](https://github.com/ZidoCode/a2a-doctor/actions/workflows/ci.yml/badge.svg)](https://github.com/ZidoCode/a2a-doctor/actions/workflows/ci.yml) [![PyPI](https://img.shields.io/pypi/v/a2a-doctor)](https://pypi.org/project/a2a-doctor/) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)]()
+
+```bash
+pip install a2a-doctor
+a2a-doctor check --card card.json --stream stream.jsonl
+```
 
 The umbrella entry point for the ZidoCode A2A audit suite:
 
