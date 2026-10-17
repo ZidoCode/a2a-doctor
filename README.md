@@ -22,6 +22,7 @@ The umbrella entry point for the ZidoCode A2A audit suite:
 | [a2a-webhook-audit](https://github.com/ZidoCode/a2a-webhook-audit) | webhook SSRF: metadata IPs, credentials, risky ports ([a2a-go#373](https://github.com/a2aproject/a2a-go/issues/373)) |
 | [a2a-timeline-replay](https://github.com/ZidoCode/a2a-timeline-replay) | time-travel explorer — per-task timelines, event windows, raw JSON at any line |
 | [a2a-card-lock](https://github.com/ZidoCode/a2a-card-lock) | agent-card pin + drift gate |
+| [a2a-card-drift](https://github.com/ZidoCode/a2a-card-drift) | protocol version sanity: MCP-date versions, 1.0 cards on pre-1.0 shape, snapshot diff ([LiteLLM#30795](https://github.com/BerriAI/litellm/issues/30795)) |
 
 Each member works standalone. a2a-doctor runs them all in one pass and gives one verdict.
 
@@ -63,6 +64,7 @@ a2a-doctor lifecycle stream.jsonl # task state machine audit
 a2a-doctor context stream.jsonl   # context/task correlation audit
 a2a-doctor webhook stream.jsonl   # webhook SSRF audit (offline)
 a2a-doctor timeline stream.jsonl  # time-travel explorer: per-task state chains
+a2a-doctor card card.json         # protocol version drift audit
 a2a-doctor lock card.json a2a-card.lock  # drift check
 ```
 
